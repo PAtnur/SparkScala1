@@ -1,0 +1,3 @@
+[0m[[0mdebug[0m] [0mCopy resource mappings: [0m
+[0m[[0mdebug[0m] [0m	(/Users/amaraj0/intellijSbt/SparkScala1/src/main/resources/hbase-site.xml,/Users/amaraj0/intellijSbt/SparkScala1/target/scala-2.11/classes/hbase-site.xml)[0m
+[0m[[0mdebug[0m] [0m	(/Users/amaraj0/intellijSbt/SparkScala1/src/main/resources/application.properties,/Users/amaraj0/intellijSbt/SparkScala1/target/scala-2.11/classes/application.properties)[0m
