@@ -55,12 +55,14 @@ object DataFileUtil {
     return fileRecCount
   }
 
-  /*def getFileName(spark:SparkSession,confFile:DataFrame, inputFile:String): Unit ={
+  def getFileName(spark:SparkSession,confFile:DataFrame, inputFile:String): String ={
     val numOfHeaderRow = ConfigFileUtil.getHeaderCount(confFile)
     val dataRowStart = ConfigFileUtil.getDataRowStartPosition(confFile)
-
+    var fileNameRow:String = null
     if(numOfHeaderRow > 1){
-
+       fileNameRow = spark.read.textFile(inputFile).first().split(",")(0)
     }
-  }*/
+
+    return fileNameRow
+  }
 }

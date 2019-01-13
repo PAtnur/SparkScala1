@@ -10,11 +10,7 @@ object SparkDataframeGroup {
   {
 
     val conf = new SparkConf().setAppName("Dataframe test").setMaster("local")
-    val spark = SparkSession.builder()
-      .config(conf)
-      .config("spark.sql.warehouse.dir", "/Users/amaraj0/intellijSbt/SparkScala1/spark-warehouse")
-      .enableHiveSupport()
-      .getOrCreate()
+    val spark = SparkSession.builder().config(conf).config("spark.sql.warehouse.dir", "/Users/amaraj0/intellijSbt/SparkScala1/spark-warehouse").enableHiveSupport().getOrCreate()
 
     import spark.implicits._
 
@@ -30,6 +26,8 @@ object SparkDataframeGroup {
     file.na.fill(Map("AnswerCount"->0)).show()
     file.na.fill("0").show()
     file.select("*").where(col("Id") === 1).show()
+    file.groupBy("Id").sum().show()
+    file.groupBy("Id").sum("AnswerCount").show()
 
   }
 

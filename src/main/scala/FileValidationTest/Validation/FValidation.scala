@@ -1,12 +1,12 @@
 package FileValidationTest.Validation
 
-import java.util.Calendar
+import java.util.{Calendar, StringJoiner}
 
 import FileValidationTest.utils.{ConfigFileUtil, DataFileUtil, HdfsUtil}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.spark.sql.Row
-import org.apache.spark.sql.types.{StringType, StructField, StructType}
+import org.apache.spark.sql.types.{ArrayType, StringType, StructField, StructType}
 
 import scala.collection.mutable.ListBuffer
 
@@ -18,15 +18,15 @@ object FValidation {
     val spark = SparkSession
       .builder()
       .config(conf)
-      .config("spark.sql.warehouse.dir", args(0))
+      .config("spark.sql.warehouse.dir", "spark-warehouse")
       .enableHiveSupport()
       .getOrCreate()
 
-    val inputPath = args(1)
-    val vaildFilesPath = args(2)
-    val invalidFilesPath = args(3)
+    val inputPath = "/Users/amaraj0/Documents/MyData/FileValidation/data"
+    val vaildFilesPath = "/Users/amaraj0/Documents/MyData/FileValidation/data_files"
+    val invalidFilesPath = "/Users/amaraj0/Documents/MyData/FileValidation/invalid_files"
     val listOfFiles = HdfsUtil.getListOfDataFiles(inputPath)
-    val configFile = args(4)
+    val configFile = "/Users/amaraj0/Documents/MyData/FileValidation/config/config.json"
     val confFile = spark.read.option("header", "true").option("inferSchema", "true").json(configFile)
     val listOfRules = ConfigFileUtil.getRules(confFile)
     listOfFiles.foreach(x => validateBasedOnRules(spark, confFile, x, listOfRules, vaildFilesPath, invalidFilesPath))
@@ -60,12 +60,21 @@ object FValidation {
   //  case "FILE_NAME" => fileNameCheck()
     case "RECORD_COUNT" => recCountCheck(confFile, spark, inputFile)
     case "COLUMN_HEADER" => columnHeaderCheck(confFile, spark, inputFile)
+    case "FILE_NAME" => fileNameCheck(confFile, spark, inputFile)
     case _ => true
   }
 
-  /*def fileNameCheck(): Boolean ={
+  def fileNameCheck(confFile:DataFrame, spark:SparkSession, inputFile: String): Boolean ={
 
-  }*/
+    val dataFileName = DataFileUtil.getFileName(spark,confFile,inputFile)
+    val fileName = HdfsUtil.getFileName(inputFile)
+    println("fileNames : " + dataFileName + "   " + fileName)
+    if(dataFileName.equals(fileName)){
+      true
+    }else{
+      false
+    }
+  }
 
   def recCountCheck(confFile:DataFrame, spark:SparkSession, inputFile: String): Boolean ={
 
@@ -105,22 +114,21 @@ object FValidation {
     val date = Calendar.getInstance()
     val timeMillis = date.getTimeInMillis.toString
     val rowKey = timeMillis + "|" + inputFile
-    spark.sql("create database if not exists FValidationDB")
-    spark.sql("create external table if not exists fvalidationdb.file_Validation(rowKey String, jobId String, fileName String, fileName_check String," +
-      " recordCount_check String, columnHeader_check String) row format delimited fields terminated by ',' stored as textFile location '/Users/amaraj0/hive/hive-warehouse'")
+    spark.sql("create database if not exists FValidationDB1")
+    spark.sql("create external table if not exists fvalidationdb1.file_Validation(rowKey String, jobId String, fileName String, status Array<String>) row format delimited fields terminated by ',' stored as textFile location '/Users/amaraj0/hive/hive-warehouse'")
 
-    val lisOfHiveColumns = List(rowKey,timeMillis,inputFile,fvStatusList(0),fvStatusList(1),fvStatusList(2))
+    val sj = new StringJoiner(",")
+    val lisOfHiveColumns = List(rowKey,timeMillis,inputFile, fvStatusList.toArray)
     val row = Row.fromSeq(lisOfHiveColumns)
     val fieldList = List(StructField("rowKey",StringType, nullable = true),
       StructField("jobId",StringType, nullable = true),
       StructField("fileName",StringType, nullable = true),
-      StructField("fileName_check",StringType, nullable = true),
-      StructField("recordCount_check",StringType, nullable = true),
-      StructField("columnHeader_check",StringType, nullable = true)
+      StructField("status",ArrayType(StringType,true), nullable = true)
     )
     val rdd = spark.sparkContext.makeRDD(List(row))
     val rddToDF = spark.createDataFrame(rdd,StructType(fieldList)).createOrReplaceTempView("tempTable")
-    spark.sql("insert into table fvalidationdb.file_Validation select * from tempTable")
+    spark.sql("insert into table fvalidationdb1.file_Validation select * from tempTable")
+    spark.sql("select * from fvalidationdb1.file_Validation").show()
 
   }
 
