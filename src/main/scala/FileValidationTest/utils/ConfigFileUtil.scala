@@ -3,8 +3,8 @@ package FileValidationTest.utils
 import org.apache.spark.SparkConf
 import org.apache.spark.sql.functions.{col, explode}
 import org.apache.spark.sql.{DataFrame, SparkSession}
-
 import scala.collection.mutable.ListBuffer
+
 
 object ConfigFileUtil {
 
@@ -20,14 +20,15 @@ object ConfigFileUtil {
 
     val configFile = "/Users/amaraj0/Documents/MyData/SchemaValidation/config.json";
     val confFile = spark.read.option("header","true").option("inferSchema","true").json(configFile)
-    val numberOfHeaderRow = getHeaderCount(confFile)
+    /*val numberOfHeaderRow = getHeaderCount(confFile)
     //  println(numberOfHeaderRow)
     val columnHeaderPosition = getDataRowStartPosition(confFile) -1
     // println(columnHeaderPosition)
     val columnNamesDF = getColumnNames(confFile)
     val rulesList = getRules(confFile)
 
-    getrecordCount(confFile)
+    getrecordCount(confFile)*/
+    getColTypes(confFile, spark)
 
   }
 
@@ -69,5 +70,14 @@ object ConfigFileUtil {
     case "BR_VALIDATE_COLUMN_HEADER" => "COLUMN_HEADER"
 
   }
+
+  def getColTypes(confFile:DataFrame, spark:SparkSession): Unit ={
+
+    val fvCols = confFile.select(explode(col("files.records.schema.columns")) as "cols")
+    val fvDataType = fvCols.select(explode(col("cols.dataType")) as "dataType")
+    fvDataType.na.replace("dataType", Map("string"->"StringType", "int"->"IntegerType")).show()
+  }
+
+
 
 }
