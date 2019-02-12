@@ -1,0 +1,5 @@
+/target
+/derby.log
+/.idea
+/metastore_db
+**.part-*

@@ -1,9 +1,11 @@
+import org.apache.hadoop.conf.Configuration
 import org.apache.sqoop.SqoopOptions
 import org.apache.sqoop.tool.ImportTool
 
 object ScalaSqoop {
 
   def main(args:Array[String]): Unit ={
+
     val options = new SqoopOptions()
     options.setConnectString("jdbc:sqlserver://localhost:1433;databaseName=mydb")
     options.setUsername("SA")
