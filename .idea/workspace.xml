@@ -67,13 +67,13 @@
         <counts>
           <entry key="java" value="1910" />
           <entry key="sbt" value="97" />
-          <entry key="scala" value="17291" />
+          <entry key="scala" value="17292" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JAVA" value="1910" />
-          <entry key="Scala" value="17291" />
+          <entry key="Scala" value="17292" />
           <entry key="sbt" value="97" />
         </counts>
       </usages-collector>
@@ -127,7 +127,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/scala/HomeBudget/ScalaHtml.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="90">
-              <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+              <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -273,14 +273,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="scala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="SparkScala1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="SparkScala1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="HomeBudget" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -823,7 +815,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/scala/HomeBudget/ScalaHtml.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
-          <caret line="6" column="17" selection-start-line="6" selection-start-column="17" selection-end-line="6" selection-end-column="17" />
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
         </state>
       </provider>
     </entry>
