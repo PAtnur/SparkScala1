@@ -12,6 +12,7 @@ object CaseClassRDD {
 
     val questionMap = questionFile.map(x => FileHeader(x.split(",")(0).toInt,x.split(",")(1),x.split(",")(2),x.split(",")(3),
       x.split(",")(4),x.split(",")(5),x.split(",")(6)))
+    val questionFilter = questionMap.filter(x => x.AnswerCount != 10)
     questionMap.collect().foreach(println)
 
   }

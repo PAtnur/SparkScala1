@@ -1,5 +1,6 @@
 package HomeBudget
 
+import java.util
 import java.util.StringJoiner
 
 import org.apache.spark.SparkConf
@@ -19,9 +20,11 @@ object SparkHomeBudget {
 
     val inputFile = "/Users/amaraj0/Documents/MyData/budget/budget.xlsx";
     val finalVal = readFile(spark, inputFile)
-  //  SwingExample.createUI(finalVal)
+ //   SwingExample.createUI(finalVal._1,finalVal._2)
   //  SwingExample.createUI(finalVal)
  //   println(finalVal)
+    val javaHtmlWriter = new JavaHtmlWriter()
+    javaHtmlWriter.createUI(finalVal._2)
   }
 
   /*def createConf(): (String, String) ={
@@ -39,7 +42,7 @@ object SparkHomeBudget {
   }*/
 
 
-  def readFile(spark:SparkSession, inputFile:String): Unit= {
+  def readFile(spark:SparkSession, inputFile:String): (String,util.ArrayList[String])= {
 
     val colNames = Seq("Saransh","Aman","Rahul")
    val excelFile = spark.read.format("com.crealytics.spark.excel").option("location", inputFile).option("useHeader","true")
@@ -58,12 +61,13 @@ object SparkHomeBudget {
 
     val gainLoss = colNames.toList.foldLeft(totalPerHead)((df,value) => df.withColumn(value+"-p",col("perHead").-(col(value))))
     gainLoss.show()
-   /* val schemaName = new StringJoiner("   ")
-    val values = new StringJoiner("     ")
+    val schemaName = new StringJoiner("   ")
+    val values = new util.ArrayList[String]()
     gainLoss.schema.fieldNames.toStream.foreach(x => schemaName.add(x))
     gainLoss.take(1)(0).toSeq.toStream.foreach(x => values.add(x.toString))
-    val finalVal = (schemaName.toString + "\n"+values.toString)
-    return finalVal*/
+    val schemaNames = schemaName.toString
+    println(values)
+    return (schemaNames , values)
  //   gainLoss.take(1).foreach(x => println(x.toSeq.toList))
   //  gainLoss.schema.fieldNames.foreach(x => println(x))
   }

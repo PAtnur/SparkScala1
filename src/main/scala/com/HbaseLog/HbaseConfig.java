@@ -1,4 +1,4 @@
-package com.HbaseLog;
+/*package com.HbaseLog;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -44,4 +44,4 @@ public class HbaseConfig {
 
     }
 
-}
+}*/

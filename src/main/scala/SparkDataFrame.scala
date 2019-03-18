@@ -14,7 +14,7 @@ object SparkDataFrame {
       .enableHiveSupport()
       .getOrCreate()
 
-    val sc = spark.sparkContext
+    val sc = new SparkContext(conf)
 
     import spark.implicits._
 

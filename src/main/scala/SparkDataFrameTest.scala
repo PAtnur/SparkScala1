@@ -11,11 +11,11 @@ object SparkDataFrameTest {
       .config("spark.sql.warehouse.dir", "/Users/amaraj0/intellijSbt/SparkScala1/spark-warehouse")
       .enableHiveSupport()
       .getOrCreate()
-    readQuestionTagFile(spark,args)
+   // readQuestionTagFile(spark,args)
     //readQuestionFile(spark)
     //readXmlFile(spark)
     //useHive(spark)
-   // joinCol(spark)
+    joinCol(spark)
 
   }
 
@@ -84,6 +84,9 @@ object SparkDataFrameTest {
 
     questionTag.join(question,Seq("Id"),"Outer").show()
     println("outer")
+
+    questionTag.join(question, Seq("Id"), "left").show()
+    println("leftjoin")
 
     questionTag.join(question, Seq("Id"), "leftsemi").show()
     println("leftsemi")

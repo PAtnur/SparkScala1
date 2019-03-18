@@ -4,7 +4,7 @@
 		module="sparkscala1$sbt_2.11"
 		revision="0.1"
 		status="integration"
-		publication="20181231113104"
+		publication="20190301225206"
 	/>
 	<configurations>
 		<conf name="default" visibility="public"/>

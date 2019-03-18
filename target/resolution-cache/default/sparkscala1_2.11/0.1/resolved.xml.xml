@@ -4,7 +4,7 @@
 		module="sparkscala1_2.11"
 		revision="0.1"
 		status="integration"
-		publication="20181229140016"
+		publication="20190301225207"
 	>
 		<description>
 		SparkScala1
@@ -43,13 +43,15 @@
 		<dependency org="org.apache.kafka" name="kafka-clients" rev="1.1.0" conf="compile->default(compile)"/>
 		<dependency org="org.apache.hadoop" name="hadoop-common" rev="2.7.3" conf="compile->default(compile)"/>
 		<dependency org="org.apache.hadoop" name="hadoop-client" rev="2.7.3" conf="compile->default(compile)"/>
-		<dependency org="org.apache.hbase" name="hbase-common" rev="1.1.2" conf="compile->default(compile)"/>
-		<dependency org="org.apache.hbase" name="hbase-client" rev="1.1.2" conf="compile->default(compile)"/>
-		<dependency org="org.apache.hbase" name="hbase" rev="1.1.2" conf="compile->default(compile)"/>
+		<dependency org="org.apache.hbase" name="hbase-mapreduce" rev="2.0.0" conf="compile->default(compile)"/>
 		<dependency org="com.crealytics" name="spark-excel_2.11" rev="0.8.2" conf="compile->default(compile)"/>
 		<dependency org="org.apache.hadoop" name="hadoop-hdfs" rev="2.7.3" conf="compile->default(compile)"/>
 		<dependency org="org.scala-lang" name="scala-swing" rev="2.11.0-M7" conf="compile->default(compile)"/>
 		<dependency org="org.apache.sqoop" name="sqoop" rev="1.4.1-incubating" conf="compile->default(compile)"/>
 		<dependency org="org.webjars.bower" name="ajax-form" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="mysql" name="mysql-connector-java" rev="5.1.47" conf="compile->default(compile)"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-core" matcher="exact" rev="2.8.7"/>
+		<override org="com.fasterxml.jackson.core" module="jackson-databind" matcher="exact" rev="2.8.7"/>
+		<override org="com.fasterxml.jackson.module" module="jackson-module-scala_2.11" matcher="exact" rev="2.8.7"/>
 	</dependencies>
 </ivy-module>
